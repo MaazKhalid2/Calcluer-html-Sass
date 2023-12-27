@@ -1,0 +1,101 @@
+
+//== Typography
+//
+//## Font, line-height, and color for body text, headings, and more.
+
+@import url('https://fonts.googleapis.com/css2?family=Lato&family=Plaster&display=swap');
+
+@font-face {
+    font-family: 'Digital dream Regular';
+    font-style: normal;
+    font-weight: normal;
+    src: url('https://assets.codepen.io/4439736/digital-dream.regular.woff') format('woff');
+}
+
+$base-font-family		:   'Poppins', sans-serif;
+$heading-font-family	:   'Poppins', sans-serif;
+$sub-heading-font-family:   'Nunito', sans-serif;
+$paragraph-font-family	: 	'Poppins', sans-serif;
+
+$font-special			: 	'Nunito', sans-serif;
+$font-another-special 	: 	'Playfair';
+$icon-font-family   	:   'FontAwesome';
+
+$base-line-height		: 	28px;
+//** Default monospace fonts for `<code>`, `<kbd>`, and `<pre>`.
+
+$base-font-size			: 	14px !default;
+$font-size-h1			: 	60px;
+$font-size-h2			: 	44px;
+$font-size-h3			: 	32px;
+$font-size-h4			: 	28px;
+$font-size-h5			: 	24px;
+$font-size-h6			: 	20px;
+
+$font-size-xsmall		: 	12px;
+$font-size-small		: 	16px;
+$font-size-medium		: 	18px;
+$font-size-large		: 	20px;
+$font-size-xlarge		: 	24px;
+
+$font-weight-black		: 	900;
+$font-weight-bold		: 	700;
+$font-weight-semi-bold	: 	500;
+$font-weight-normal		: 	400;
+$font-weight-light		: 	300;
+$font-weight-thin		: 	100;
+
+
+$font-size-h1-res			: 	40px;
+$font-size-h2-res			: 	34px;
+$font-size-h3-res			: 	24px;
+$font-size-h4-res			: 	20px;
+$font-size-h5-res			: 	16px;
+$font-size-h6-res			: 	14px;
+
+
+//== Color Variation
+//
+//## Text color, Background color, Border color.
+
+$theme-default	: 	#666666;
+$theme-white	: 	#ffffff;
+$theme-black	: 	#222222;
+$theme-silver	: 	#f8f8f8;
+$theme-grey		: 	#858585;
+$theme-lg-grey	: 	#F7F7F7;
+$theme-sp-grey	: 	#363636;
+$theme-dk-grey 	: 	#373c3f;
+$theme-sp-blue	:	#f3f9f9;
+$theme-lg-black :   #3B3A3A;
+$theme-lg-white : 	#E2EAF3;
+$theme-dk-pink	:   #C6C6C6;
+$theme-lg-black	: 	#434343;
+$theme-lg-pink 	: 	#bcbcbc;
+$theme-purple 	: 	#4B0082;
+$theme-lg-white	: 	#f0f2f5;
+$theme-lg-silver: 	#B3B3B3;
+$theme-lg-blue 	:  	#3D5975;
+$theme-dk-blue	:   #10121E;
+
+// Theme Colors
+
+$theme-primary	: 	#877b71;
+$theme-secondary: 	#d5cec8;
+$theme-blue 	: 	#0f59bb;
+$theme-dk-green	: 	#53cc35;
+$theme-middle	: 	#f3f3f3;
+$theme-pink		:	#C6C6C6;
+
+$link-color		: 	#ffffff;
+
+//== Sprite Path
+//
+
+$sprite-image			: 	"sprite.png";
+$media-basepath			: 	"images";
+$full-path				: 	"#{$media-basepath}/#{$sprite-image}";
+
+
+// Icon Fonts Path
+$icomoon-font-path: "assets-web/icon-fonts/fonts" !default;

@@ -1,0 +1,99 @@
+$gutter : 30px;
+
+.grid-block{
+	overflow: hidden;
+	@include unstyled;
+
+	> * {
+		float: left;
+		@include box-sizing;
+	}
+
+	&.\--type-inline-blocks{
+		> * {
+			float: none;
+			display: inline-block;
+			vertical-align: top;
+			margin-left: -5px;
+		}		
+	}
+	
+	&.\--type-two-blocks{
+		> * {
+			width: 50% !important;
+		}	
+	}
+
+	&.\--type-three-blocks{
+		> * {
+			width: 33.333% !important;
+		}	
+	}
+
+	&.\--type-four-blocks{
+		> * {
+			width: 25% !important;
+		}
+	}
+
+	&.\--type-five-blocks{
+		> * {
+			width: 20% !important;
+		}		
+	}
+
+	&.\--style-offsets{
+		margin-left: -$gutter;
+		> * {
+			padding-left: $gutter;
+		}
+
+		&.small{
+			margin-left: -20px;
+			> * {
+				padding-left: 20px;
+			}
+		}
+		&.formtop{
+			margin-left: -10px;
+			> * {
+				padding-left: 10px;
+			}
+		}
+	}
+
+	&.\--bottom-offset{
+		> * {
+			margin-bottom: 50px;
+		}
+		&.small{
+			> * {
+				margin-bottom: 30px;
+			}
+		}
+	}
+
+	@media (max-width: 991px){
+		&.\--type-ipad-full{
+			overflow: visible;
+			@include unstyled;
+			> * {
+				width: 100% !important;
+			}
+		}
+	}
+
+	@media (max-width: 767px){
+		&.\--type-mobile-full{
+			overflow: visible;
+			@include unstyled;
+			> * {
+				width: 100% !important;
+			}
+		}
+	}
+}
+
+ul.grid-block{
+	@include unstyled;
+}

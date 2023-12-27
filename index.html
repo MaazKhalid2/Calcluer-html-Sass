@@ -1,0 +1,487 @@
+<!DOCTYPE html5>
+<html>
+   <head>
+      <title>Calculator | Home</title>
+      <meta charset="Calculator">
+      <meta name="description" content="Calculator">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" type="text/css" href="style.css">
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css" integrity="
+         sha384-aOkxzJ5uQz7WBObEZcHvV5JvRW3TUc2rNPA7pe3AwnsUohiw1Vj2Rgx2KSOkF5+h" crossorigin="anonymous">
+   </head>
+<body>
+   
+<div class="calculator">
+  <div class="calculator__top">
+    <h1>Calcul</h1>
+    <input type="text" class="calculator__top--display" value="" disabled/>
+  </div>
+  <div class="calculator__middle">
+    <div class="calculator__middle--top"></div>
+    <div class="calculator__middle--junction"></div>
+    <div class="calculator__middle--bottom"></div>
+  </div>
+  <div class="calculator__bottom">
+    <button type="button" class="calculator__bottom--item"><div class="cursor"></div></button>
+    <button type="button" class="calculator__bottom--item"><div class="cursor"></div></button>
+    <button type="button" class="calculator__bottom--item item-grey-small" data-action="punchline" value="this">THIS</button>
+    <button type="button" class="calculator__bottom--item item-grey-small" data-action="punchline" value="is">IS</button>
+    <button type="button" class="calculator__bottom--item item-grey-small" data-action="punchline" value="like">LIKE</button>
+    <button type="button" class="calculator__bottom--item item-grey-big" data-action="arrow" value=";-)">→</button>
+    <button type="button" class="calculator__bottom--item item-grey-small" data-action="punchline" value="an">AN</button>
+    <button type="button" class="calculator__bottom--item item-grey-small" data-action="punchline" value="old">OLD</button>
+    <button type="button" class="calculator__bottom--item item-grey-small" data-action="punchline" value="calc">CALC</button>
+    <button type="button" class="calculator__bottom--item item-grey-small" data-action="punchline" value="ula">ULA</button>
+    <button type="button" class="calculator__bottom--item item-grey-small" data-action="punchline" value="tor">TOR</button>
+    <button type="button" class="calculator__bottom--item item-grey-big" data-action="squareRoot" value="">√</button>
+    <button type="button" class="calculator__bottom--item item-black" value="7">7</button>
+    <button type="button" class="calculator__bottom--item item-black" value="8">8</button>
+    <button type="button" class="calculator__bottom--item item-black" value="9">9</button>
+    <button type="button" class="calculator__bottom--item item-blue" data-action="smile" value="b">B</button>
+    <button type="button" class="calculator__bottom--item item-blue" data-action="smile" value="f">F</button>
+    <button type="button" class="calculator__bottom--item item-grey-big" data-action="smile" value="?">?</button>
+    <button type="button" class="calculator__bottom--item item-black" value="4">4</button>
+    <button type="button" class="calculator__bottom--item item-black" value="5">5</button>
+    <button type="button" class="calculator__bottom--item item-black" value="6">6</button>
+    <button type="button" class="calculator__bottom--item item-grey-big" data-action="operator" value="*">×</button>
+    <button type="button" class="calculator__bottom--item item-grey-big" data-action="operator" value="/">/</button>
+    <button type="button" class="calculator__bottom--item item-grey-big" data-action="color" value="color">☀︎</button>
+    <button type="button" class="calculator__bottom--item item-black" value="1">1</button>
+    <button type="button" class="calculator__bottom--item item-black" value="2">2</button>
+    <button type="button" class="calculator__bottom--item item-black" value="3">3</button>
+    <button type="button" class="calculator__bottom--item item-grey-big" data-action="operator" value="+">+</button>
+    <button type="button" class="calculator__bottom--item item-grey-big" data-action="operator" value="-">-</button>
+    <button type="button" class="calculator__bottom--item item-red" data-action="clear" value="0">AC</button>
+    <button type="button" class="calculator__bottom--item item-black" value="0">0</button>
+    <button type="button" class="calculator__bottom--item item-black" value="0">00</button>
+    <button type="button" class="calculator__bottom--item item-black" data-action="decimal" value=".">.</button>
+    <button type="button" class="calculator__bottom--item item-grey-big" data-action="operator" value="=">=</button>
+  </div>
+</div>
+
+<div class="col-md-12">
+   <p class="ta-center fs-small">© 2021 Calculator <span>Made with <i class="fa fa-heart"></i> by <a class="ahj" href="#" target="_blank">Maaz Khalid</a></span></p>
+         </div>
+
+<script type="text/javascript">
+   /* Inspired by https://freshman.tech/calculator/ tutorial */
+const display = document.querySelector('.calculator__top--display');
+
+const calculator = {
+  displayValue: '0',
+  firstOperand: null,
+  waitingForSecondOperand: false,
+  operator: null,
+};
+
+// if key is a number
+function inputDigit(digit) {
+   // if it's after an operator or after a previous value of 0, displayValue is digit
+   // if it's after zero , the new value displayed is digit or previousValue + digit 
+      if (
+         calculator.operator == 'smile' ||
+         calculator.operator == 'punchline' ||
+         calculator.operator == 'arrow' ||
+         calculator.operator == 'square'
+      ) {
+         calculator.displayValue = '';
+         calculator.operator = null
+      }
+      if (
+         calculator.waitingForSecondOperand || 
+         calculator.displayValue == '0'
+      ) {
+         calculator.displayValue = digit;
+         calculator.waitingForSecondOperand = false;
+      } else {
+         calculator.displayValue = calculator.displayValue + digit;
+      }
+}
+
+// if key is a dot,displayValue is the previous value + dot if it doesn't contain a dot already.
+function inputDecimal(dot) {
+   if (calculator.waitingForSecondOperand) {
+      calculator.displayValue = '0.';
+      calculator.waitingForSecondOperand = false;
+      return;
+   }
+   if (!calculator.displayValue.includes(dot)) {
+      calculator.displayValue += dot;
+   }
+}
+
+// if key is an operator
+function handleOperator(nextOperator) {
+ const inputValue = parseFloat(calculator.displayValue);
+   // if punchline or smile keys
+   if (isNaN(inputValue)) {
+      return;
+   }
+   
+   // if there was already an operator clicked and we click on another operator : we update the calculator operator property
+   if (calculator.operator && calculator.waitingForSecondOperand)  {
+    calculator.operator = nextOperator;
+    return;
+  }
+   // if there is no firstOperand and inputValue is not NaN, firstOperand is inputValue
+   // else firstOperand is the result of calculate function and we can update the screen
+  if (calculator.firstOperand == null && !isNaN(inputValue)) {
+    calculator.firstOperand = inputValue;
+  } else if (calculator.operator) {
+    const result = calculate(calculator.firstOperand, inputValue, calculator.operator);
+         /* we use a .toFixed method because in a computer, with a binary representation of numbers, 0,1 is a rounded number to the nearest number in that format which result in an error (for example if you add 0,1 + 0,2 you should have 0,3000000000000004). We use .toFixed with 7 for precision.
+         */
+    calculator.displayValue = `${parseFloat(result.toFixed(7))}`;
+    calculator.firstOperand = result;
+  }
+  calculator.waitingForSecondOperand = true;
+  calculator.operator = nextOperator;
+}
+
+
+function calculate(firstOperand, secondOperand, operator) {
+   if (operator == '+') {
+    return firstOperand + secondOperand;
+  } else if (operator == '-') {
+    return firstOperand - secondOperand;
+  } else if (operator == '*') {
+    return firstOperand * secondOperand;
+  } else if (operator == '/') {
+    return firstOperand / secondOperand;
+  }
+   // if operator is =
+  return secondOperand;
+}
+
+function handleSquareRoot() {
+   if (isNaN(calculator.displayValue)) {
+      return;
+   }
+   calculator.displayValue = Math.sqrt(parseFloat(calculator.displayValue));
+   calculator.operator = 'square';
+}
+
+function resetCalculator() {
+      calculator.displayValue = '0';
+  calculator.firstOperand = null;
+  calculator.waitingForSecondOperand = false;
+  calculator.operator = null;
+}
+
+function handleSmileKeys(value) {
+   switch (value) {
+      case "f":
+         calculator.displayValue = "Front inspired by Canon";
+         break;
+      case "b":
+         calculator.displayValue = "Back inspired by Freshman";
+         break;
+      case "?":
+         calculator.displayValue = "CLick on any key !";
+         break;
+   }
+   calculator.firstOperand = null;
+   calculator.waitingForSecondOperand = false;
+   calculator.operator = 'smile';
+}
+
+function handlePunchline(value) {
+   calculator.displayValue = value;
+   calculator.firstOperand = null;
+   calculator.waitingForSecondOperand = false;
+   calculator.operator = 'punchline';
+}
+
+// update screen
+function updateDisplay() {
+  display.value = calculator.displayValue;
+}
+
+function colorDisplay() {
+   display.classList.toggle('on');
+}
+
+function handleArrow(emoji) {
+   calculator.displayValue = emoji;
+   calculator.firstOperand = null;
+   calculator.waitingForSecondOperand = false;
+   calculator.operator = 'arrow';
+}
+
+updateDisplay();
+
+const keys = document.querySelector('.calculator__bottom');
+keys.addEventListener('click', (event) => {
+  const { target } = event;
+  if (!target.matches('button')) {
+    return;
+  }
+      
+      switch (target.dataset.action) {
+         case 'operator':
+            handleOperator(target.value);
+            break;
+         case 'decimal':
+            inputDecimal(target.value);
+            break;
+         case 'squareRoot':
+            handleSquareRoot();
+            break;
+         case 'smile':
+            handleSmileKeys(target.value);
+            break;
+         case 'punchline':
+            handlePunchline(target.value);
+            break;
+         case 'color':
+            colorDisplay();
+            break;
+         case 'arrow':
+            handleArrow(target.value);
+            break;
+         case 'clear':
+            resetCalculator();
+            break;
+         default:
+            if (Number.isInteger(parseFloat(target.value))) {
+               inputDigit(target.value);
+            }
+      }
+  updateDisplay();
+});
+</script>
+</body>
+</html>
+
+
+
+<footer>
+            <div class="container-fluid pl-5">
+                <ul class="MenuFooter">
+            <li  class="menu-item" data-aos="zoom-in-right"><a href="#"><h5 class="menu-image-title">Beds</h5></a>
+            <ul class="sub-menu">
+              <li class="sub-menu-item"><a href="#">CUSTOM MADE BEDS</a></li>
+              <li class="sub-menu-item"><a href="#">CUSTOM MADE STANDARD BEDS</a></li>
+              <li class="sub-menu-item"><a href="#">CUSTOM MADE WALL HEADBOARDS</a></li>
+            </ul>
+            </li>
+               <li  class="menu-item" data-aos="zoom-in-right"><a href="#"><h5 class="menu-image-title">Mattresses</h5></a>
+            <ul class="sub-menu">
+              <li class="sub-menu-item"><a href="#">MAMMOTH MATTRESS – UK MADE</a></li>
+              <li class="sub-menu-item"><a href="#">MEROË SPINAL SUPPORT MATTRESS</a></li>
+              <li class="sub-menu-item"><a href="#">SEALY MATTRESS</a></li>
+            </ul>
+            </li>
+               <li  class="menu-item" data-aos="zoom-in"><a href="#"><h5 class="menu-image-title">Bed Essentials</h5></a>
+            <ul class="sub-menu">
+              <li class="sub-menu-item"><a href="#">CUSTOM MADE BEDS</a></li>
+              <li class="sub-menu-item"><a href="#">CUSTOM MADE STANDARD BEDS</a></li>
+              <li class="sub-menu-item"><a href="#">CUSTOM MADE WALL HEADBOARDS</a></li>
+            </ul>
+            </li>
+               <li  class="menu-item" data-aos="zoom-in-left"><a href="#"><h5 class="menu-image-title">Bed Linens</h5></a>
+            <ul class="sub-menu">
+              <li class="sub-menu-item"><a href="#">CUSTOM MADE BEDS</a></li>
+              <li class="sub-menu-item"><a href="#">CUSTOM MADE STANDARD BEDS</a></li>
+              <li class="sub-menu-item"><a href="#">CUSTOM MADE WALL HEADBOARDS</a></li>
+            </ul>
+            </li>
+               <li  class="menu-item" data-aos="zoom-in-left"><a href="#"><h5 class="menu-image-title">Bath Linens</h5></a>
+            <ul class="sub-menu">
+              <li class="sub-menu-item"><a href="#">CUSTOM MADE BEDS</a></li>
+              <li class="sub-menu-item"><a href="#">CUSTOM MADE STANDARD BEDS</a></li>
+              <li class="sub-menu-item"><a href="#">CUSTOM MADE WALL HEADBOARDS</a></li>
+            </ul>
+            </li>
+               <li  class="menu-item" data-aos="zoom-in-left"><a href="#"><h5 class="menu-image-title">Bedroom Furniture</h5></a>
+            <ul class="sub-menu">
+              <li class="sub-menu-item"><a href="#">CUSTOM MADE BEDS</a></li>
+              <li class="sub-menu-item"><a href="#">WOODEN BEDSIDE TABLES</a></li>
+              <li class="sub-menu-item"><a href="#">MIRROR BEDSIDE TABLES</a></li>
+            </ul>
+            </li>
+               <li  class="menu-item" data-aos="zoom-in-right"><a href="#"><h5 class="menu-image-title">Bedside Tables</h5></a>
+            </li>
+            <li  class="menu-item" data-aos="zoom-in-right"><a href="#"><h5 class="menu-image-title">Coushions</h5></a>
+            </li>
+                  <li  class="menu-item" data-aos="zoom-in-left"><a href="#"><h5 class="menu-image-title">Home Fragrances</h5></a>
+            <ul class="sub-menu">
+              <li class="sub-menu-item"><a href="#">TRADTIIONAL FRAGRANCES</a></li>
+              <li class="sub-menu-item"><a href="#">COLLLECTION FRAGRANCES</a></li>
+              <li class="sub-menu-item"><a href="#">LINES FRAGRANCES</a></li>
+            </ul>
+            </li>
+               <li  class="menu-item" data-aos="zoom-in-left"><a href="#"><h5 class="menu-image-title">About Us</h5></a>
+            </li>
+               <li  class="menu-item" data-aos="zoom-in-left"><a href="#"><h5 class="menu-image-title">Contact Us</h5></a>
+                 <ul class="sub-menu">
+              <li class="sub-menu-item"><a href="tel:+971 (0)4 3 992-992"><span>+971 (0)4 3 992-992</span></a></li>
+              <li class="sub-menu-item"><a href="maltio:INFO@MEROELINENS.COM"><span>INFO@MEROELINENS.COM</span></a></li>
+            </ul>
+               </li>
+                    </ul>
+            </div>
+            <div class="clearfix"></div>
+      
+
+            <div class="copyrights">
+                <div class="container-fluid pl-5 pr-5">
+                    <div class="col-md-6 col-sm-12 ta-sm-center social-footer">
+                        <p class="col-sm-12"><span class="text">Follow us on social media</span>
+                        <a class="ta-sm-center" href="https://web.archive.org/web/20190907033038/http://www.facebook/meroelinens" target="_blank">
+                          <i class="fa fa-facebook"></i></a>
+                        <!--<a href="http://www.instagram.com/meroelinens" target="_blank"><span class="icon-youtube"></span></a>-->
+<a class="ta-sm-center" href="https://web.archive.org/web/20190907033038/http://www.instagram.com/meroelinens" target="_blank"><i class="fa fa-instagram"></i></a></p>
+                    </div>
+
+                    <div class="col-md-3   ta-sm-center ta-right">
+                        <p class="">JOIN OUR MAILKING LIST BY SIGNING UP!</p>
+                    </div>
+                    <div class="col-md-3 col-sm-12  ta-sm-center">
+                 <!--        <form>
+                            <input type="text" class="input" placeholder="Sign up for email">
+                            <button type="submit" class="emailsubmit"><img src="https://web.archive.org/web/20190907033038im_/https://meroe.me/wp-content/themes/meroe/img/emailicon-footer.png" alt="E"></button>
+                        </form> -->
+                       <?php echo do_shortcode('[contact-form-7 id="33" title="Contact Footer"]'); ?>
+
+                    </div>
+                </div>
+    
+        </div>
+      </footer>
+
+
+
+
+<div class="overlay-bg"></div>
+<?php wp_footer(); ?>
+  
+  <script type="text/javascript" src="<?php bloginfo('template_directory');?>/js/theme-lib.js"></script>
+  <script type="text/javascript" src="<?php bloginfo('template_directory');?>/js/theme-fun.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  AOS.init();
+</script>
+</body>
+  </html>
+
+
+
+
+
+
+
+
+
+
+
+
+<footer>
+            <div class="container-fluid pl-5">
+                <div class="MenuFooter row">
+            <div  class="col-md-2 menu-item" data-aos="zoom-in-right"><a href="#"><h5 class="menu-image-title">Beds</h5></a>
+            <ul class="sub-menu">
+              <li class="sub-menu-item"><a href="#">CUSTOM MADE BEDS</a></li>
+              <li class="sub-menu-item"><a href="#">CUSTOM MADE STANDARD BEDS</a></li>
+              <li class="sub-menu-item"><a href="#">CUSTOM MADE WALL HEADBOARDS</a></li>
+            </ul>
+            </div>
+               <div  class="menu-item col-md-2" data-aos="zoom-in-right"><a href="#"><h5 class="menu-image-title">Mattresses</h5></a>
+            <ul class="sub-menu">
+              <li class="sub-menu-item"><a href="#">MAMMOTH MATTRESS – UK MADE</a></li>
+              <li class="sub-menu-item"><a href="#">MEROË SPINAL SUPPORT MATTRESS</a></li>
+              <li class="sub-menu-item"><a href="#">SEALY MATTRESS</a></li>
+            </ul>
+            </div>
+               <div  class="menu-item col-md-2" data-aos="zoom-in"><a href="#"><h5 class="menu-image-title">Bed Essentials</h5></a>
+            <ul class="sub-menu">
+              <li class="sub-menu-item"><a href="#">CUSTOM MADE BEDS</a></li>
+              <li class="sub-menu-item"><a href="#">CUSTOM MADE STANDARD BEDS</a></li>
+              <li class="sub-menu-item"><a href="#">CUSTOM MADE WALL HEADBOARDS</a></li>
+            </ul>
+            </div>
+               <div  class="menu-item col-md-2" data-aos="zoom-in-left"><a href="#"><h5 class="menu-image-title">Bed Linens</h5></a>
+            <ul class="sub-menu">
+              <li class="sub-menu-item"><a href="#">CUSTOM MADE BEDS</a></li>
+              <li class="sub-menu-item"><a href="#">CUSTOM MADE STANDARD BEDS</a></li>
+              <li class="sub-menu-item"><a href="#">CUSTOM MADE WALL HEADBOARDS</a></li>
+            </ul>
+            </div>
+               <div  class="menu-item col-md-2" data-aos="zoom-in-left"><a href="#"><h5 class="menu-image-title">Bath Linens</h5></a>
+            <ul class="sub-menu">
+              <li class="sub-menu-item"><a href="#">CUSTOM MADE BEDS</a></li>
+              <li class="sub-menu-item"><a href="#">CUSTOM MADE STANDARD BEDS</a></li>
+              <li class="sub-menu-item"><a href="#">CUSTOM MADE WALL HEADBOARDS</a></li>
+            </ul>
+            </div>
+               <div  class="menu-item col-md-2" data-aos="zoom-in-left"><a href="#"><h5 class="menu-image-title">Bedroom Furniture</h5></a>
+            <ul class="sub-menu">
+              <li class="sub-menu-item"><a href="#">CUSTOM MADE BEDS</a></li>
+              <li class="sub-menu-item"><a href="#">WOODEN BEDSIDE TABLES</a></li>
+              <li class="sub-menu-item"><a href="#">MIRROR BEDSIDE TABLES</a></li>
+            </ul>
+            </div>
+               <div  class="menu-item col-md-2" data-aos="zoom-in-right"><a href="#"><h5 class="menu-image-title">Bedside Tables</h5></a>
+            </li>
+            <div  class="menu-item col-md-2" data-aos="zoom-in-right"><a href="#"><h5 class="menu-image-title">Coushions</h5></a>
+            </li>
+                  <div  class="menu-item col-md-2" data-aos="zoom-in-left"><a href="#"><h5 class="menu-image-title">Home Fragrances</h5></a>
+            <ul class="sub-menu">
+              <li class="sub-menu-item"><a href="#">TRADTIIONAL FRAGRANCES</a></li>
+              <li class="sub-menu-item"><a href="#">COLLLECTION FRAGRANCES</a></li>
+              <li class="sub-menu-item"><a href="#">LINES FRAGRANCES</a></li>
+            </ul>
+            </div>
+               <div  class="menu-item col-md-2" data-aos="zoom-in-left"><a href="#"><h5 class="menu-image-title">About Us</h5></a>
+            </li>
+               <div  class="menu-item col-md-2" data-aos="zoom-in-left"><a href="#"><h5 class="menu-image-title">Contact Us</h5></a>
+                 <ul class="sub-menu">
+              <li class="sub-menu-item"><a href="tel:+971 (0)4 3 992-992"><span>+971 (0)4 3 992-992</span></a></li>
+              <li class="sub-menu-item"><a href="maltio:INFO@MEROELINENS.COM"><span>INFO@MEROELINENS.COM</span></a></li>
+            </ul>
+               </li>
+                    </ul>
+            </div>
+            <div class="clearfix"></div>
+      
+
+            <div class="copyrights">
+                <div class="container-fluid pl-5 pr-5">
+                    <div class="col-md-6 col-sm-12 ta-sm-center social-footer">
+                        <p class="col-sm-12"><span class="text">Follow us on social media</span>
+                        <a class="ta-sm-center" href="https://web.archive.org/web/20190907033038/http://www.facebook/meroelinens" target="_blank">
+                          <i class="fa fa-facebook"></i></a>
+                        <!--<a href="http://www.instagram.com/meroelinens" target="_blank"><span class="icon-youtube"></span></a>-->
+<a class="ta-sm-center" href="https://web.archive.org/web/20190907033038/http://www.instagram.com/meroelinens" target="_blank"><i class="fa fa-instagram"></i></a></p>
+                    </div>
+
+                    <div class="col-md-3   ta-sm-center ta-right">
+                        <p class="">JOIN OUR MAILKING LIST BY SIGNING UP!</p>
+                    </div>
+                    <div class="col-md-3 col-sm-12  ta-sm-center">
+                 <!--        <form>
+                            <input type="text" class="input" placeholder="Sign up for email">
+                            <button type="submit" class="emailsubmit"><img src="https://web.archive.org/web/20190907033038im_/https://meroe.me/wp-content/themes/meroe/img/emailicon-footer.png" alt="E"></button>
+                        </form> -->
+                       <?php echo do_shortcode('[contact-form-7 id="33" title="Contact Footer"]'); ?>
+
+                    </div>
+                </div>
+    
+        </div>
+      </footer>
+
+
+
+
+<div class="overlay-bg"></div>
+<?php wp_footer(); ?>
+  
+  <script type="text/javascript" src="<?php bloginfo('template_directory');?>/js/theme-lib.js"></script>
+  <script type="text/javascript" src="<?php bloginfo('template_directory');?>/js/theme-fun.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  AOS.init();
+</script>
+</body>
+  </html>

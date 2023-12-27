@@ -1,0 +1,83 @@
+form{
+  &.grey{
+
+
+
+    background-color:#f9f9f9; 
+  }
+  input, select, textarea{
+    padding-left: 10px;
+
+    color: $theme-default;
+    font-weight: 400;
+    padding: 10px;
+    font-family: $sub-heading-font-family;
+    border: 0px solid rgba(59, 58, 58, 1);
+    box-shadow: none;
+    font-size: $base-font-size;
+    -webkit-appearance: none;
+    border-radius: 1px;  
+    // border: none;
+    width: 100%;
+
+  }
+&.checkout, .login, .register{
+   input[type=text], input[type=number], input[type=email], input[type=tel], select, textarea{
+    background-color: transparent;
+    border:1px solid #aeaeae;
+  }
+}
+  input[type=text]{
+    text-transform: capitalize;
+  }
+ 
+  input[type=text], input[type=number], input[type=email], input[type=tel], select, textarea{
+    background-color: transparent;
+    width: 100%;
+    border: 1px solid #aeaeae;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    max-height: 100px;
+    &::placeholder{
+        color:$theme-default;
+    }
+  }
+  textarea{
+    height: 120px;
+  }
+
+  input[type=submit]{
+    background: $theme-primary;
+    padding: 15px;
+    max-width: 200px;
+    display: inline-block;
+    text-align: center;
+    position: relative;
+    letter-spacing: 1px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 16px;
+    color: $theme-white;
+    margin: 20px auto;
+    min-width: 70px;
+    border: none;
+    @include transition(0.3s);
+    // float: right;
+    // width: 10%;
+
+    &:hover{
+      background: $theme-secondary;
+    }
+
+  }
+
+}
+body{
+  &.checkout{
+      form{
+        input{
+          background-color: white !important;
+        }
+      }
+  }
+}

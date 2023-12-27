@@ -1,0 +1,214 @@
+@mixin box-sizing{
+	-webkit-box-sizing: border-box;      // Safari/Chrome, other WebKit 
+    -moz-box-sizing: border-box;         // Firefox, other Gecko 
+    box-sizing: border-box;  			 // Opera/IE 8+
+}
+
+@mixin clearfix() {
+  &:before,
+  &:after {
+    content: " "; // 1
+    display: table; // 2
+  }
+  &:after {
+    clear: both;
+  }
+}
+
+@mixin unstyled{
+  list-style: none;
+  margin-left: 0;
+  padding-left: 0;
+}
+
+@mixin bg-gradient{
+  background: -webkit-linear-gradient(left, #9105ea, #f73c95);
+  background: -o-linear-gradient(left, #9105ea, #f73c95);
+  background: -moz-linear-gradient(left, #9105ea, #f73c95);
+  background: linear-gradient(to right, #9105ea, #f73c95);
+}
+
+// --------------------------------------------------------------------
+// Responsive Image 
+// --------------------------------------------------------------------
+@mixin img-responsive($display: block){
+	display: $display;
+	max-width: 100%; // Part 1: Set a maximum relative to the parent
+	height: auto; // Part 2: Scale the height according to the width, otherwise you get stretching
+}
+
+
+// --------------------------------------------------------------------
+// Opacity 
+// --------------------------------------------------------------------
+// @include opacity(0.8);
+//
+@mixin opacity($opacity) {
+  opacity: $opacity;
+  // IE8 filter
+  $opacity-ie: ($opacity * 100);
+  filter: alpha(opacity=$opacity-ie);
+}
+
+
+// --------------------------------------------------------------------
+// DIV Center Align
+// --------------------------------------------------------------------
+@mixin m-auto() {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+// --------------------------------------------------------------------
+// Border Radius
+// --------------------------------------------------------------------
+
+@mixin border-top-radius($radius) {
+  border-top-right-radius: $radius;
+   border-top-left-radius: $radius;
+}
+@mixin border-right-radius($radius) {
+  border-bottom-right-radius: $radius;
+     border-top-right-radius: $radius;
+}
+@mixin border-bottom-radius($radius) {
+  border-bottom-right-radius: $radius;
+   border-bottom-left-radius: $radius;
+}
+@mixin border-left-radius($radius) {
+  border-bottom-left-radius: $radius;
+     border-top-left-radius: $radius;
+}
+@mixin border-radius($radius) {
+  border-radius: $radius;
+}
+
+
+// --------------------------------------------------------------------
+// Define Size 
+// --------------------------------------------------------------------
+
+@mixin size($width, $height) {
+  width: $width;
+  height: $height;
+}
+
+@mixin sprite(
+  $x            : 0,
+  $y            : 0,
+  $width        : 100px,
+  $height       : 100px,
+  $sprite-image : $full-path
+){
+  background: {
+    image: url($sprite-image);
+    position: -1*$x -1*$y;
+    repeat: no-repeat;
+  }
+  width: $width; height: $height;
+}
+
+
+@mixin transition($args...){
+	-webkit-transition: $args;
+	-moz-transition	  : $args;
+	-o-transition     : $args;
+	transition        : $args;
+}
+
+
+@mixin transition-delay($transition-delay) {
+  -webkit-transition-delay: $transition-delay;
+     -moz-transition-delay: $transition-delay;
+       -o-transition-delay: $transition-delay;
+          transition-delay: $transition-delay;
+}
+
+
+@mixin box-shadow($args...){
+	-webkit-box-shadow: $args;
+	box-shadow: $args;
+}
+
+
+@mixin transform($args...){
+	-webkit-transform: $args;
+	-moz-transform: $args;
+	-o-transform: $args;
+	-ms-transform: $args;
+	transform: $args;
+}
+
+
+@mixin animation($args){
+	-webkit-animation: $args;
+	  -moz-animation: $args;
+	   -ms-animation: $args;
+	    -o-animation: $args;
+	       animation: $args;
+}
+
+
+@mixin media-query-min($point){
+	@media screen and (min-width: $point) { @content; }
+}
+
+// --------------------------------------------------------------------
+// Media-query-min-to-max
+// --------------------------------------------------------------------
+//
+// `@include media-query-min-to-max($startpoint, $endpoint)`
+//
+// ~~~
+// $startpoint, $endpoint: [n]px
+// ~~~
+//
+// For more control over breakpoints.
+// ~~~
+// @include media-query-min-to-max(430px, 560px){... your styles ...}
+// ~~~
+// will generate
+// ~~~
+// @media screen and (min-width: 430px) and (max-width: 560px) { 
+//    ... your styles ...
+// }
+// ~~~
+//
+
+@mixin media-query-min-to-max($startpoint, $endpoint){
+	@media screen and (min-width: $startpoint) and (max-width: $endpoint) { @content; }
+}
+
+
+// --------------------------------------------------------------------
+// Media-query-max
+// --------------------------------------------------------------------
+//
+// ~~~
+// @include media-query-max(430px){... your styles ...}
+// ~~~
+// will generate
+// ~~~
+// @media screen and (max-width: 430px){ 
+//    ... your styles ...
+// }
+// ~~~
+//
+
+@mixin media-query-max($point){
+	@media screen and (max-width: $point) { @content; }
+}
+
+// --------------------------------------------------------------------
+// Default Mixins
+// --------------------------------------------------------------------
+
+@mixin ta($align){
+	text-align: $align;
+}
+
+@mixin border($border){
+  border: $border;
+}

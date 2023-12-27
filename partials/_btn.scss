@@ -1,0 +1,123 @@
+.btn{
+	padding: 8px 20px;
+	display: inline-block;
+	text-align: center;
+	font-family:$base-font-family;	
+	position: relative;
+	letter-spacing: 1px;
+	@include transition(0.4s ease);
+	
+	cursor: pointer;	
+
+	&.\--large{
+		padding: 25px 45px;
+	}
+
+	&.\--medium{
+		padding: 15px 18px;
+		
+	}
+	&.\--bold{
+		font-weight: 600 !important;
+	}
+
+	&.btn-primary{
+		// background-color: $theme-primary;
+		color: $theme-white;
+		font-weight: 600;
+		text-transform: uppercase;
+		background-color: $theme-primary;
+		// width: 150px;
+
+		&:hover{
+			background-color: #F7C318;
+		}
+		&.\--outline{
+			background: none;
+			color: $theme-primary;
+			border: 2px solid $theme-primary;
+		}
+	}
+
+
+
+
+
+	&.btn-secondary{
+
+		background-color: $theme-secondary;
+		color: $theme-white;
+		border:none;
+		font-size: 16px;
+		min-width: 200px;
+		font-weight: 300;
+		text-transform: uppercase;
+		&:hover{
+			background-color: $theme-primary;
+			color:$theme-white;
+		}
+		&.\--outline{
+			background: none;
+			border: 2px solid $theme-secondary;
+		}
+	}
+	&.btn-black{
+
+		background-color: $theme-black;
+		color: $theme-white;
+		border:none;
+		font-size: 18px;
+		min-width: 210px;
+		font-weight: 300;
+		text-transform: uppercase;
+		&:hover{
+			background-color: $theme-middle;
+			color:$theme-black;
+		}
+		&.\--outline{
+			background: none;
+			border: 2px solid $theme-secondary;
+		}
+	}
+	&.btn-middle{
+
+		background-color: $theme-middle;
+		color: $theme-black;
+		border:none;
+		font-size: 12px;
+		max-width: 200px;
+		font-weight: 400;
+		// text-transform: uppercase;
+		&:hover{
+			background-color: $theme-black;
+			color:$theme-white;
+		}
+		&.\--outline{
+			background: none;
+			border: 2px solid $theme-secondary;
+		}
+	}
+		&.btn-white{
+
+		background-color: $theme-middle;
+		color: $theme-black;
+		border:none;
+		font-size: 12px;
+		max-width: 200px;
+		font-weight: 400;
+		// text-transform: uppercase;
+		&:hover{
+			background-color: $theme-black;
+			color:$theme-white;
+		}
+		&.\--outline{
+			background: none;
+			border: 2px solid $theme-white;
+			color:white;
+			&:hover{
+			background-color: $theme-black;
+			color:$theme-white;
+		}
+		}
+	}
+}
